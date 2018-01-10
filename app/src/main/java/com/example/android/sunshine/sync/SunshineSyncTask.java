@@ -17,30 +17,30 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 
-public class SunshineSyncTask{
+public class SunshineSyncTask {
 
     private static String TAG = SunshineSyncTask.class.getSimpleName();
 
     //  COMPLETED (2) Within SunshineSyncTask, create a synchronized public static void method called syncWeather
-    public static synchronized void syncWeather(Context context){
+    public static synchronized void syncWeather(Context context) {
 
 
         //      COMPLETED (3) Within syncWeather, fetch new weather data
 
         URL weatherUrl = NetworkUtils.getUrl(context);
-        if(weatherUrl == null) return;
+        if (weatherUrl == null) return;
 
         String jsonResponse = null;
-        try{
+        try {
             jsonResponse = NetworkUtils.getResponseFromHttpUrl(weatherUrl);
-        }catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "Error in JSON parser");
         }
 
         ContentValues[] weatherContentValues = null;
-        try{
-            weatherContentValues = OpenWeatherJsonUtils.getWeatherContentValuesFromJson(context,jsonResponse);
-        }catch (JSONException e){
+        try {
+            weatherContentValues = OpenWeatherJsonUtils.getWeatherContentValuesFromJson(context, jsonResponse);
+        } catch (JSONException e) {
             Log.e(TAG, "Error in creating ContentValues[]");
         }
 
@@ -50,14 +50,12 @@ public class SunshineSyncTask{
 
             ContentResolver sunshineContentResolver = context.getContentResolver();
 
-            int deletedRows = sunshineContentResolver.delete(contentProviderUri,null,null);
-            int insertedRows = sunshineContentResolver.bulkInsert(contentProviderUri,weatherContentValues);
+            int deletedRows = sunshineContentResolver.delete(contentProviderUri, null, null);
+            int insertedRows = sunshineContentResolver.bulkInsert(contentProviderUri, weatherContentValues);
 
         }
 
     }
-
-
 
 
 }

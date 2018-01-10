@@ -19,10 +19,10 @@ import java.net.URL;
 
 public class SunshineSyncTask{
 
-    private String TAG = SunshineSyncTask.this.getClass().getSimpleName();
+    private static String TAG = SunshineSyncTask.class.getSimpleName();
 
     //  COMPLETED (2) Within SunshineSyncTask, create a synchronized public static void method called syncWeather
-    public synchronized void syncWeather(Context context){
+    public static synchronized void syncWeather(Context context){
 
 
         //      COMPLETED (3) Within syncWeather, fetch new weather data
